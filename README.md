@@ -8,19 +8,23 @@ Works with every HTML format: websites, books, blogs, single documents,
 reveal.js slides and dashboards. PDF, Word and other formats are left as they
 are.
 
+The extension connects your pages to the Asyntai service, so it needs an
+Asyntai account. Asyntai has a free plan, and paid plans add more messages
+per month.
+
 ## Install
 
 Run this in your project folder:
 
 ```bash
-quarto add asyntai/quarto-ai-chatbot
+quarto add asyntai/quarto-asyntai-ai-chatbot
 ```
 
 Then add the filter and your widget ID to `_quarto.yml`:
 
 ```yaml
 filters:
-  - ai-chatbot
+  - asyntai-ai-chatbot
 
 asyntai:
   widget-id: asyntai_1a2b3c4d5e6f
@@ -35,7 +39,7 @@ For a single document, put the same lines in its front matter:
 title: My report
 format: html
 filters:
-  - ai-chatbot
+  - asyntai-ai-chatbot
 asyntai:
   widget-id: asyntai_1a2b3c4d5e6f
 ---
@@ -91,7 +95,7 @@ documents, and question and answer pairs.
 
 ## Removing it
 
-Delete `ai-chatbot` from `filters` and render again. The widget is gone.
+Delete `asyntai-ai-chatbot` from `filters` and render again. The widget is gone.
 
 ## Support
 

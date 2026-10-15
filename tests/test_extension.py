@@ -16,7 +16,7 @@ import tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
-EXT = os.path.join(ROOT, "_extensions", "ai-chatbot")
+EXT = os.path.join(ROOT, "_extensions", "asyntai-ai-chatbot")
 QUARTO = os.environ.get("QUARTO") or shutil.which("quarto") or "quarto"
 
 WID = "asyntai_1a2b3c4d5e6f"
@@ -39,7 +39,7 @@ def check(name, ok, detail=""):
 
 def project(files):
     d = tempfile.mkdtemp(prefix="qa-")
-    shutil.copytree(EXT, os.path.join(d, "_extensions", "ai-chatbot"))
+    shutil.copytree(EXT, os.path.join(d, "_extensions", "asyntai-ai-chatbot"))
     for path, body in files.items():
         full = os.path.join(d, path)
         os.makedirs(os.path.dirname(full), exist_ok=True)
@@ -71,7 +71,7 @@ def src_of(html):
 WEBSITE_CFG = (
     "project:\n  type: website\nwebsite:\n  title: Test\n"
     "  navbar:\n    left:\n      - index.qmd\n      - about.qmd\n"
-    "filters:\n  - ai-chatbot\nasyntai:\n  widget-id: " + WID + "\n"
+    "filters:\n  - asyntai-ai-chatbot\nasyntai:\n  widget-id: " + WID + "\n"
 )
 
 
@@ -129,7 +129,7 @@ def test_book():
         "_quarto.yml": (
             "project:\n  type: book\nbook:\n  title: Handbook\n  chapters:\n"
             "    - index.qmd\n    - intro.qmd\nformat:\n  html: default\n"
-            "filters:\n  - ai-chatbot\nasyntai:\n  widget-id: " + WID + "\n"
+            "filters:\n  - asyntai-ai-chatbot\nasyntai:\n  widget-id: " + WID + "\n"
         ),
         "index.qmd": "# Preface {.unnumbered}\n\nHello.\n",
         "intro.qmd": "# Introduction\n\nText.\n",
@@ -142,7 +142,7 @@ def test_book():
 
 
 def doc(front, body="Hello.\n"):
-    return "---\n" + front + "filters:\n  - ai-chatbot\n---\n\n" + body
+    return "---\n" + front + "filters:\n  - asyntai-ai-chatbot\n---\n\n" + body
 
 
 def test_single_formats():
@@ -197,7 +197,7 @@ def test_settings_errors():
         code, out = render(d, "page.qmd")
         # Quarto logs filter errors and finishes the page, like its own filters.
         check(label + " prints an ERROR line that explains the fix",
-              ("ERROR" in out or "(E) ai-chatbot" in out) and message in out, out[-300:])
+              ("ERROR" in out or "(E) asyntai-ai-chatbot" in out) and message in out, out[-300:])
         check(label + " adds no widget tag", code == 0 and tags(read(d, "page.html")) == [])
         shutil.rmtree(d, ignore_errors=True)
 
@@ -233,7 +233,7 @@ def test_quarto_add():
     os.makedirs(site)
     r = subprocess.run([QUARTO, "add", archive, "--no-prompt"], cwd=site,
                        capture_output=True, text=True, encoding="utf-8", errors="replace")
-    installed = os.path.isfile(os.path.join(site, "_extensions", "ai-chatbot", "ai-chatbot.lua"))
+    installed = os.path.isfile(os.path.join(site, "_extensions", "asyntai-ai-chatbot", "asyntai-ai-chatbot.lua"))
     check("quarto add installs the extension", r.returncode == 0 and installed, (r.stdout + r.stderr)[-400:])
     with open(os.path.join(site, "page.qmd"), "w", encoding="utf-8") as f:
         f.write(doc("title: P\nformat: html\nasyntai:\n  widget-id: " + WID + "\n"))

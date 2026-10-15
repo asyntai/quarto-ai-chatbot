@@ -8,7 +8,7 @@
 -- Settings, in _quarto.yml or in the front matter of a document:
 --
 --   filters:
---     - ai-chatbot
+--     - asyntai-ai-chatbot
 --   asyntai:
 --     widget-id: asyntai_1a2b3c4d5e6f
 --     enabled: true          # optional, false keeps the widget off
@@ -47,7 +47,7 @@ end
 -- Quarto prints an error and goes on with the render, so a wrong setting
 -- shows a red ERROR line for each page and the page gets no widget.
 local function fail(message)
-  quarto.log.error("ai-chatbot: " .. message)
+  quarto.log.error("asyntai-ai-chatbot: " .. message)
   return nil
 end
 
